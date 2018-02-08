@@ -1,0 +1,41 @@
+.nav-h {
+  height: 56px;
+}
+
+.off-canvas {
+  position: fixed;
+  top: 56px;
+  bottom: 0;
+  width: 300px;
+  z-index: 900;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.off-canvas-btn {
+  z-index: 901;
+  background-color: transparent;
+  border: 0px;
+}
+
+
+.z-1000 {
+  z-index: 1000
+}
+
+.left0 {
+  left: 0;
+}
+
+.right0 {
+  right: 0;
+}
+
+@media (max-width: 576px) {
+  .off-canvas {
+    left: 0;
+    right: 0;
+    width: 100%;
+  }
+}
