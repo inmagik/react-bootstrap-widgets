@@ -4,17 +4,18 @@ import { Nav, Navbar, NavItem } from 'reactstrap'
 import matchMedia from 'match-media'
 import { NavLink } from 'react-router-dom'
 import { breakpoints } from '../consts'
-import './Topbar.css'
+import injectSheet from 'react-jss'
+import TopbarStyles from './TopbarStyles'
 
 
-const ButtonMenu = ({ onClick, bigToggler = false, open, navbarClass }) => (
-  <button className={'off-canvas-btn'} onClick={onClick}>
+const ButtonMenu = injectSheet(TopbarStyles)(({ onClick, bigToggler = false, open, navbarClass, classes }) => (
+  <button className={classes.offCanvasBtn} onClick={onClick}>
     <i
       className={`fa fa-${open ? `close` : `bars`} ${bigToggler ? `fa-2x`: ''} ${navbarClass}`}
       aria-hidden="true"
     />
   </button>
-)
+))
 
 
 class PaddedList extends PureComponent {
@@ -41,7 +42,7 @@ class PaddedList extends PureComponent {
 
 
 
-class Topbar extends PureComponent {
+const Topbar = injectSheet(TopbarStyles)(class extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -93,17 +94,18 @@ class Topbar extends PureComponent {
             bigToggler,
             breakpoint,
             offCanvRight,
-            brand } = this.props
+            brand,
+            classes } = this.props
 
       const { showOffCanvas } = this.state
 
     return (
         <div
-          className={`navbar navbar-expand w-100 nav-h ${navbarClass}`}
+          className={`navbar navbar-expand w-100 ${classes.navH} ${navbarClass}`}
           >
           <div className='d-inline-flex justify-content-between w-100 align-items-center'>
 
-            <div className='d-inline-flex z-1000'>
+            <div className={`d-inline-flex ${classes.z1000}`}>
               {showOffCanvas && leftBtn &&
                 <ButtonMenu
                   onClick={this.toggleMenu}
@@ -164,7 +166,7 @@ class Topbar extends PureComponent {
 
           {showOffCanvas && this.state.open &&
             <div
-              className={`off-canvas ${offCanvRight ? `right0` : `left0`} ${navbarClass}`}
+              className={`${classes.offCanvas} ${offCanvRight ? classes.right0 : classes.left0} ${navbarClass}`}
               >
               <ul className="list-group w-100">
               {rightLinks && rightLinks.map((l, i) => (
@@ -183,7 +185,6 @@ class Topbar extends PureComponent {
                 l.children
                 ? <PaddedList key={i} label={l.label} items={l.children} navbarClass={navbarClass} />
                 : <li className={`list-group-item ${navbarClass}`} key={i}><NavLink
-
                     to={l.link}
                     className='ml-1 mr-1'
                   >
@@ -195,7 +196,7 @@ class Topbar extends PureComponent {
         </div>
     )
   }
-}
+})
 
 Topbar.defaultProps = {
   breakpoint: 'sm',
