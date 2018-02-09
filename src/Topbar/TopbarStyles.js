@@ -15,12 +15,6 @@ export default {
     flexDirection: 'column',
   },
 
-  offCanvasBtn: {
-    zIndex: 901,
-    backgroundColor: 'transparent',
-    border: '0px',
-  },
-
   z1000: {
     zIndex: 1000
   },

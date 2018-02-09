@@ -1,54 +1,17 @@
+import 'match-media'
 import React, { PureComponent } from 'react'
-import DropDown from './DropDown'
-import { Nav, Navbar, NavItem } from 'reactstrap'
-import matchMedia from 'match-media'
 import { NavLink } from 'react-router-dom'
-import { breakpoints } from '../consts'
 import injectSheet from 'react-jss'
+import { breakpoints } from '../consts'
 import TopbarStyles from './TopbarStyles'
+import TopBarLink from './TopBarLink'
+import PaddedList from './PaddedList'
+import TogglerButton from './TogglerButton'
 
-
-const ButtonMenu = injectSheet(TopbarStyles)(({ onClick, bigToggler = false, open, navbarClass, classes }) => (
-  <button className={classes.offCanvasBtn} onClick={onClick}>
-    <i
-      className={`fa fa-${open ? `close` : `bars`} ${bigToggler ? `fa-2x`: ''} ${navbarClass}`}
-      aria-hidden="true"
-    />
-  </button>
-))
-
-
-class PaddedList extends PureComponent {
-  render() {
-    const { label, items, navbarClass } = this.props
-    return (
-      <div>
-      <li className={`list-group-item ${navbarClass}`}>
-        <span className={'d-inline-flex align-items-center'}>{label}</span>
-      </li>
-      {items.map((item, i) => (
-        <li key={i} className={`list-group-item ${navbarClass} pl-5`}>
-          <NavLink
-            to={item.link}
-          >
-            {item.label}
-          </NavLink>
-        </li>
-      ))}
-      </div>
-    )
-  }
-}
-
-
-
-const Topbar = injectSheet(TopbarStyles)(class extends PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = {
-      open: false,
-      showOffCanvas: false,
-    }
+class Topbar extends PureComponent {
+  state = {
+    open: false,
+    showOffCanvas: false,
   }
 
   componentDidMount() {
@@ -73,10 +36,9 @@ const Topbar = injectSheet(TopbarStyles)(class extends PureComponent {
       showOffCanvas = true
     }
 
-    this.setState({
-      showOffCanvas,
-    })
-
+    if (this.state.showOffCanvas !== showOffCanvas) {
+      this.setState({ showOffCanvas })
+    }
   }
 
   toggleMenu = () => {
@@ -86,124 +48,92 @@ const Topbar = injectSheet(TopbarStyles)(class extends PureComponent {
   }
 
   render() {
-    const { navbarClass,
-            rightLinks,
-            leftLinks,
-            leftBtn,
-            rightBtn,
-            bigToggler,
-            breakpoint,
-            offCanvRight,
-            brand,
-            classes } = this.props
+    const {
+      classes,
+      navbarClass,
+      brand,
+      rightLinks,
+      leftLinks,
+      togglerPosition,
+      togglerClassName,
+      offCanvasItemClass,
+      offCanvasPosition,
+    } = this.props
 
-      const { showOffCanvas } = this.state
+    let offCanvasPosClass = ''
+    if (offCanvasPosition === 'right') {
+      offCanvasPosClass = classes.right0
+    } else if (offCanvasPosition === 'left') {
+      offCanvasPosClass = classes.left0
+    }
+
+    const { showOffCanvas } = this.state
 
     return (
-        <div
-          className={`navbar navbar-expand w-100 ${classes.navH} ${navbarClass}`}
-          >
-          <div className='d-inline-flex justify-content-between w-100 align-items-center'>
+      <div className={`navbar navbar-expand w-100 ${classes.navH} ${navbarClass}`}>
 
-            <div className={`d-inline-flex ${classes.z1000}`}>
-              {showOffCanvas && leftBtn &&
-                <ButtonMenu
-                  onClick={this.toggleMenu}
-                  bigToggler={bigToggler}
-                  open={this.state.open}
-                  navbarClass={navbarClass}
-                />}
+        {showOffCanvas && togglerPosition === 'left' &&
+          <TogglerButton
+            className={togglerClassName}
+            onClick={this.toggleMenu}
+            open={this.state.open}
+          />}
 
-              <div className="navbar-brand">{brand}</div>
+        <a className="navbar-brand">{brand}</a>
 
-              {!showOffCanvas && leftLinks &&
-                <ul className='navbar-nav'>
-                {leftLinks.map((l, i) => (
-                  l.children
-                  ? <DropDown key={i} label={l.label} items={l.children}  />
-                  : <li className="nav-item " key={i}>
-                    <NavLink
-                      to={l.link}
-                      className={`nav-link ml-1 mr-1`}
-                      >
-                      {l.label}
-                    </NavLink>
-                    </li>
-                ))}
-              </ul>
-            }
-            </div>
+        <ul className="navbar-nav mr-auto">
+          {!showOffCanvas && leftLinks.map((linkConf, i) => (
+            <TopBarLink key={i} {...linkConf} />
+          ))}
+        </ul>
 
-            <div className='d-inline-flex p-2 '>
-              {!showOffCanvas && rightLinks && <Nav className=''>
-                {rightLinks.map((l, i) => (
-                  l.children
-                  ? <DropDown
-                      key={i}
-                      label={l.label}
-                      items={l.children}
-                      icon={l.icon}
-                      right
-                    />
-                  : <NavLink
-                      key={i}
-                      to={l.link}
-                      className='ml-1 mr-1'
-                    >
-                    {l.label}
-                    </NavLink>
-                ))}
-              </Nav>}
-              {showOffCanvas && rightBtn &&
-                <ButtonMenu
-                  onClick={this.toggleMenu}
-                  bigToggler={bigToggler}
-                  open={this.state.open}
-                />}
-            </div>
+        <ul className="navbar-nav">
+          {!showOffCanvas && rightLinks.map((linkConf, i) => (
+            <TopBarLink key={i} {...linkConf} />
+          ))}
+        </ul>
 
-          </div>
+        {showOffCanvas && togglerPosition === 'right' &&
+          <TogglerButton
+            className={togglerClassName}
+            onClick={this.toggleMenu}
+            open={this.state.open}
+          />}
 
           {showOffCanvas && this.state.open &&
             <div
-              className={`${classes.offCanvas} ${offCanvRight ? classes.right0 : classes.left0} ${navbarClass}`}
+              className={`Topbar__offCanvas ${classes.offCanvas} ${offCanvasPosClass} ${navbarClass}`}
               >
               <ul className="list-group w-100">
-              {rightLinks && rightLinks.map((l, i) => (
-                l.children
-                ? <PaddedList key={i} label={l.label} items={l.children} navbarClass={navbarClass} />
-                : <li className={`list-group-item ${navbarClass}`} key={i}>
-                  <NavLink
-                    to={l.link}
-                    className='ml-1 mr-1'
-                    >
-                      {l.label}
-                  </NavLink>
-                  </li>
-              ))}
-              {leftLinks && leftLinks.map((l, i) => (
-                l.children
-                ? <PaddedList key={i} label={l.label} items={l.children} navbarClass={navbarClass} />
-                : <li className={`list-group-item ${navbarClass}`} key={i}><NavLink
-                    to={l.link}
-                    className='ml-1 mr-1'
-                  >
-                    {l.label}
-                  </NavLink></li>
-              ))}
-            </ul>
+                {leftLinks.concat(rightLinks).map((l, i) => (
+                  l.links
+                    ? <PaddedList label={l.label} items={l.links} className={offCanvasItemClass} key={i} />
+                    : (
+                      <li onClick={l.onClick} className={`list-group-item ${offCanvasItemClass}`} key={i}>
+                        {
+                          l.to
+                            ? <NavLink to={l.to}>{l.label}</NavLink>
+                            : l.label
+                        }
+                      </li>
+                    )
+                ))}
+              </ul>
             </div>}
         </div>
     )
   }
-})
+}
 
 Topbar.defaultProps = {
-  breakpoint: 'sm',
-  leftBtn: false,
-  rightBtn: false,
-  offCanvRight: false,
+  breakpoint: 'xs',
+  leftLinks: [],
+  rightLinks: [],
+  togglerPosition: 'left',
+  togglerClassName: 'text-white',
+  offCanvasPosition: 'left',
+  offCanvasItemClass: 'bg-dark',
   navbarClass: 'navbar-dark bg-dark text-white',
 }
 
-export default Topbar
+export default injectSheet(TopbarStyles)(Topbar)
