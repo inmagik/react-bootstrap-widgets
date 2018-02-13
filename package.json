@@ -29,6 +29,7 @@
     "css-loader": "^0.28.9",
     "gh-pages": "^1.1.0",
     "html-webpack-plugin": "^2.30.1",
+    "lodash": "^4.17.5",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-router-dom": "^4.2.2",
@@ -41,8 +42,11 @@
     "webpack-dev-server": "^2.11.1"
   },
   "dependencies": {
+    "lodash.debounce": "^4.0.8",
+    "lodash.defaults": "^4.2.0",
     "lodash.range": "^3.2.0",
     "match-media": "^0.2.0",
+    "query-string": "^5.1.0",
     "react-jss": "^8.3.0"
   }
 }
