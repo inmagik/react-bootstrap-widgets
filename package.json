@@ -41,6 +41,7 @@
     "webpack-dev-server": "^2.11.1"
   },
   "dependencies": {
+    "lodash.range": "^3.2.0",
     "match-media": "^0.2.0",
     "react-jss": "^8.3.0"
   }

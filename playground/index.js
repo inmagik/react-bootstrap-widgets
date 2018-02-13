@@ -3,6 +3,7 @@ import React from 'react'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import Home from './pages/Home'
 import TopbarExample from './pages/TopbarExample'
+import PaginatorExample from './pages/PaginatorExample'
 import 'bootstrap/dist/css/bootstrap.css'
 
 const App = () => (
@@ -10,6 +11,7 @@ const App = () => (
       <Switch>
         <Route path='/' exact component={Home} />
         <Route path='/topbar' exact component={TopbarExample} />
+        <Route path='/paginator' exact component={PaginatorExample} />
       </Switch>
     </Router>
 
