@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import Home from './pages/Home'
 import TopbarExample from './pages/TopbarExample'
 import PaginatorExample from './pages/PaginatorExample'
+import PropertiesGridExample from './pages/PropertiesGridExample'
 import 'bootstrap/dist/css/bootstrap.css'
 
 const App = () => (
@@ -12,6 +13,7 @@ const App = () => (
         <Route path='/' exact component={Home} />
         <Route path='/topbar' exact component={TopbarExample} />
         <Route path='/paginator' exact component={PaginatorExample} />
+        <Route path='/PropertiesGrid' exact component={PropertiesGridExample} />
       </Switch>
     </Router>
 
