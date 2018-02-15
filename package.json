@@ -15,7 +15,7 @@
     "build": "rimraf lib && babel src --out-dir lib",
     "build:playground": "rimraf build && webpack --config webpack.prod.js",
     "prepublishOnly": "npm run build",
-    "deploy": "npm run build:example && cpr 404.html build/ && gh-pages -d build"
+    "deploy": "npm run build:playground && cp 404.html build/ && gh-pages -d build"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
