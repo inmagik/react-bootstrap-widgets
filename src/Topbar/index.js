@@ -83,7 +83,7 @@ class Topbar extends PureComponent {
             open={this.state.open}
           />}
 
-        <a className="navbar-brand">{brand}</a>
+        <span className="navbar-brand">{brand}</span>
 
         <ul className="navbar-nav mr-auto">
           {!showOffCanvas && leftLinks.map((linkConf, i) => (
