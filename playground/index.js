@@ -5,6 +5,7 @@ import Home from './pages/Home'
 import TopbarExample from './pages/TopbarExample'
 import PaginatorExample from './pages/PaginatorExample'
 import WithDataTableExample from './pages/WithDataTableExample'
+import WithModalConfirmExample from './pages/WithModalConfirmExample'
 import 'bootstrap/dist/css/bootstrap.css'
 
 const App = () => (
@@ -14,6 +15,7 @@ const App = () => (
       <Route path='/Topbar' exact component={TopbarExample} />
       <Route path='/Paginator' exact component={PaginatorExample} />
       <Route path='/withDataTable' exact component={WithDataTableExample} />
+      <Route path='/withModalConfirm' exact component={WithModalConfirmExample} />
     </Switch>
   </Router>
 )

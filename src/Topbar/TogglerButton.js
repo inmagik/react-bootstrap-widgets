@@ -9,10 +9,10 @@ const styles = {
   },
 }
 
-const TogglerButton = ({ onClick, open, className, classes }) => (
+const TogglerButton = ({ onClick, open, className, classes, openIconClass, closedIconClass }) => (
   <button className={classes.offCanvasBtn} onClick={onClick}>
     <i
-      className={`fa fa-${open ? `times` : `bars`} ${className}`}
+      className={`${open ? openIconClass : closedIconClass} ${className}`}
       aria-hidden="true"
     />
   </button>

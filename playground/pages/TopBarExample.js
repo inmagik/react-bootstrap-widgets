@@ -13,6 +13,8 @@ export default class TopbarExample extends React.PureComponent {
         offCanvasPosition='left'
         offCanvasItemClass='bg-dark'
         navbarClass='navbar-dark bg-dark text-white'
+        offCanvasMenuOpenClass='fab fa-android'
+        offCanvasMenuClosedClass='fas fa-heartbeat'
         leftLinks={[
           // // Simple
           {

@@ -58,6 +58,8 @@ class Topbar extends PureComponent {
       togglerClassName,
       offCanvasItemClass,
       offCanvasPosition,
+      offCanvasMenuOpenClass,
+      offCanvasMenuClosedClass,
     } = this.props
 
     let offCanvasPosClass = ''
@@ -74,6 +76,8 @@ class Topbar extends PureComponent {
 
         {showOffCanvas && togglerPosition === 'left' &&
           <TogglerButton
+            openIconClass={offCanvasMenuOpenClass}
+            closedIconClass={offCanvasMenuClosedClass}
             className={togglerClassName}
             onClick={this.toggleMenu}
             open={this.state.open}
@@ -95,6 +99,8 @@ class Topbar extends PureComponent {
 
         {showOffCanvas && togglerPosition === 'right' &&
           <TogglerButton
+            openIconClass={offCanvasMenuOpenClass}
+            closedIconClass={offCanvasMenuClosedClass}
             className={togglerClassName}
             onClick={this.toggleMenu}
             open={this.state.open}
@@ -133,6 +139,8 @@ Topbar.defaultProps = {
   togglerClassName: 'text-white',
   offCanvasPosition: 'left',
   offCanvasItemClass: 'bg-dark',
+  offCanvasMenuOpenClass: 'fa fa-times',
+  offCanvasMenuClosedClass: 'fa fa-bars',
   navbarClass: 'navbar-dark bg-dark text-white',
 }
 

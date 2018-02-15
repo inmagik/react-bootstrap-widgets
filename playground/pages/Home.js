@@ -12,6 +12,7 @@ export default class Home extends React.PureComponent {
             <li><Link to='/TopBar'>TopBar</Link></li>
             <li><Link to='/Paginator'>Paginator</Link></li>
             <li><Link to='/withDataTable'>withDataTable</Link></li>
+            <li><Link to='/withModalConfirm'>withModalConfirm</Link></li>
           </ul>
         </div>
       </div>
