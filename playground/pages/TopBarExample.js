@@ -23,7 +23,8 @@ export default class TopbarExample extends React.PureComponent {
           // Link
           {
             label: 'Home',
-            to: '/',
+            exact: true,
+            to: '/TopBar',
           },
           // Custom jsx and click
           {
@@ -36,7 +37,7 @@ export default class TopbarExample extends React.PureComponent {
             links: [
               {
                 label: 'Settings',
-                to: '/settings',
+                to: '/TopBar/settings',
               },
               {
                 label: <Fragment><i className={'fa fa-space-shuttle'} />{' '}Space</Fragment>,
