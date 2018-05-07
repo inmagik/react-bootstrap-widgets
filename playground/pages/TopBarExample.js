@@ -49,6 +49,18 @@ export default class TopbarExample extends React.PureComponent {
         rightLinks={[
           {
             label: 'On the right!',
+          },
+          // Dropdown
+          {
+            label: 'Who?',
+            links: [
+              {
+                label: 'Gio Va',
+              },
+              {
+                label: 'Lo Re'
+              },
+            ]
           }
         ]}
       />
