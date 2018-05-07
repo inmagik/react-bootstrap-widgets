@@ -1,16 +1,16 @@
 import React from 'react'
-import injectSheet from 'react-jss'
 
 const styles = {
   offCanvasBtn: {
     zIndex: 901,
+    outline: 'none',
     backgroundColor: 'transparent',
     border: 0,
   },
 }
 
 const TogglerButton = ({ onClick, open, className, classes, openIconClass, closedIconClass }) => (
-  <button className={classes.offCanvasBtn} onClick={onClick}>
+  <button style={styles.offCanvasBtn} onClick={onClick}>
     <i
       className={`${open ? openIconClass : closedIconClass} ${className}`}
       aria-hidden="true"
@@ -18,4 +18,4 @@ const TogglerButton = ({ onClick, open, className, classes, openIconClass, close
   </button>
 )
 
-export default injectSheet(styles)(TogglerButton)
+export default TogglerButton

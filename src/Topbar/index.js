@@ -1,12 +1,20 @@
 import 'match-media'
-import React, { PureComponent } from 'react'
+import React, { PureComponent, Fragment } from 'react'
 import { NavLink } from 'react-router-dom'
-import injectSheet from 'react-jss'
 import { breakpoints } from '../consts'
-import TopbarStyles from './TopbarStyles'
 import TopBarLink from './TopBarLink'
 import PaddedList from './PaddedList'
 import TogglerButton from './TogglerButton'
+
+const baseOffCanvasStyle = {
+  position: 'fixed',
+  bottom: 0,
+  width: '100%',
+  zIndex: 900,
+  display: 'flex',
+  alignItems: 'center',
+  flexDirection: 'column',
+}
 
 class Topbar extends PureComponent {
   state = {
@@ -24,7 +32,7 @@ class Topbar extends PureComponent {
   }
 
   componentDidUpdate(oldProps) {
-    if(oldProps.breakpoint !== this.props.breakpoint ) {
+    if (oldProps.breakpoint !== this.props.breakpoint ) {
       this.updateOffCanvas()
     }
   }
@@ -51,81 +59,94 @@ class Topbar extends PureComponent {
     const {
       classes,
       navbarClass,
+      navbarHeight,
       brand,
       rightLinks,
       leftLinks,
       togglerPosition,
       togglerClassName,
+      offCanvasClass,
+      offCanvasStyle,
       offCanvasItemClass,
       offCanvasPosition,
       offCanvasMenuOpenClass,
       offCanvasMenuClosedClass,
     } = this.props
 
-    let offCanvasPosClass = ''
+    let offCanvasStyles = {
+      ...baseOffCanvasStyle,
+      ...offCanvasStyle,
+      top: navbarHeight,
+    }
     if (offCanvasPosition === 'right') {
-      offCanvasPosClass = classes.right0
+      offCanvasStyles = { ...offCanvasStyles, right: 0 }
     } else if (offCanvasPosition === 'left') {
-      offCanvasPosClass = classes.left0
+      offCanvasStyles = { ...offCanvasStyles, left: 0 }
     }
 
     const { showOffCanvas } = this.state
+    const offCanvasClasses = `${navbarClass}`
 
     return (
-      <div className={`navbar navbar-expand w-100 ${classes.navH} ${navbarClass}`}>
+      <div
+        className={`navbar navbar-expand w-100 ${navbarClass}`}
+        style={{ height: navbarHeight }}>
 
-        {showOffCanvas && togglerPosition === 'left' &&
-          <TogglerButton
-            openIconClass={offCanvasMenuOpenClass}
-            closedIconClass={offCanvasMenuClosedClass}
-            className={togglerClassName}
-            onClick={this.toggleMenu}
-            open={this.state.open}
-          />}
+        {!showOffCanvas && (
+          // "Desktop" layout
+          <Fragment>
+            <span className="navbar-brand">{brand}</span>
 
-        <span className="navbar-brand">{brand}</span>
+            <ul className="navbar-nav mr-auto">
+              {leftLinks.map((linkConf, i) => (
+                <TopBarLink key={i} right={false} {...linkConf} />
+              ))}
+            </ul>
 
-        <ul className="navbar-nav mr-auto">
-          {!showOffCanvas && leftLinks.map((linkConf, i) => (
-            <TopBarLink key={i} right={false} {...linkConf} />
-          ))}
-        </ul>
+            <ul className="navbar-nav">
+              {rightLinks.map((linkConf, i) => (
+                <TopBarLink key={i} right={true} {...linkConf} />
+              ))}
+            </ul>
+          </Fragment>
+        )}
 
-        <ul className="navbar-nav">
-          {!showOffCanvas && rightLinks.map((linkConf, i) => (
-            <TopBarLink key={i} right={true} {...linkConf} />
-          ))}
-        </ul>
+        {showOffCanvas && (
+          // "Mobile" layout
+          <Fragment>
+            <ul className={`navbar-nav m${togglerPosition === 'left' ? 'r' : 'l'}-auto`}>
+              {togglerPosition === 'right' && <span className="navbar-brand">{brand}</span>}
+              <TogglerButton
+                openIconClass={offCanvasMenuOpenClass}
+                closedIconClass={offCanvasMenuClosedClass}
+                className={togglerClassName}
+                onClick={this.toggleMenu}
+                open={this.state.open}
+              />
+              {togglerPosition === 'left' && <span className="navbar-brand">{brand}</span>}
+            </ul>
+          </Fragment>
+        )}
 
-        {showOffCanvas && togglerPosition === 'right' &&
-          <TogglerButton
-            openIconClass={offCanvasMenuOpenClass}
-            closedIconClass={offCanvasMenuClosedClass}
-            className={togglerClassName}
-            onClick={this.toggleMenu}
-            open={this.state.open}
-          />}
+        {showOffCanvas && this.state.open &&
+          <div className={offCanvasClasses} style={offCanvasStyles}>
+            <ul className="list-group w-100">
+              {leftLinks.concat(rightLinks).map((l, i) => (
+                l.links
+                  ? <PaddedList label={l.label} items={l.links} className={offCanvasItemClass} key={i} />
+                  : (
+                    <li onClick={l.onClick} className={`list-group-item ${offCanvasItemClass}`} key={i}>
+                      {
+                        l.to
+                          ? <NavLink to={l.to}>{l.label}</NavLink>
+                          : l.label
+                      }
+                    </li>
+                  )
+              ))}
+            </ul>
+          </div>}
 
-          {showOffCanvas && this.state.open &&
-            <div
-              className={`Topbar__offCanvas ${classes.offCanvas} ${offCanvasPosClass} ${navbarClass}`}
-              >
-              <ul className="list-group w-100">
-                {leftLinks.concat(rightLinks).map((l, i) => (
-                  l.links
-                    ? <PaddedList label={l.label} items={l.links} className={offCanvasItemClass} key={i} />
-                    : (
-                      <li onClick={l.onClick} className={`list-group-item ${offCanvasItemClass}`} key={i}>
-                        {
-                          l.to
-                            ? <NavLink to={l.to}>{l.label}</NavLink>
-                            : l.label
-                        }
-                      </li>
-                    )
-                ))}
-              </ul>
-            </div>}
         </div>
     )
   }
@@ -142,6 +163,7 @@ Topbar.defaultProps = {
   offCanvasMenuOpenClass: 'fa fa-times',
   offCanvasMenuClosedClass: 'fa fa-bars',
   navbarClass: 'navbar-dark bg-dark text-white',
+  navbarHeight: 56,
+  offCanvasClass: '',
 }
-
-export default injectSheet(TopbarStyles)(Topbar)
+export default Topbar

@@ -8,13 +8,16 @@ export default class TopbarExample extends React.PureComponent {
         brand='Cool Top'
         // See breakpoints
         breakpoint='xs'
-        togglerPosition='left'
+        togglerPosition='right'
         togglerClassName='text-white'
         offCanvasPosition='left'
         offCanvasItemClass='bg-dark'
         navbarClass='navbar-dark bg-dark text-white'
         offCanvasMenuOpenClass='fab fa-android'
         offCanvasMenuClosedClass='fas fa-heartbeat'
+        offCanvasStyle={{
+          width: 300,
+        }}
         leftLinks={[
           // Dropdown
           {
@@ -66,7 +69,6 @@ export default class TopbarExample extends React.PureComponent {
           },
           // Dropdown
           {
-            right: false,
             label: 'Who?',
             links: [
               {

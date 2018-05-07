@@ -47,7 +47,6 @@
     "lodash.range": "^3.2.0",
     "match-media": "^0.2.0",
     "popper.js": "1.12.9",
-    "query-string": "^5.1.0",
-    "react-jss": "^8.3.0"
+    "query-string": "^5.1.0"
   }
 }
