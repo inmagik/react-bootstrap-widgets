@@ -1,6 +1,6 @@
 {
   "name": "react-bootstrap-widgets",
-  "version": "0.1.3",
+  "version": "0.2.0",
   "description": "Generic react components based on twitter bootstrap",
   "main": "lib/index.js",
   "repository": "git@github.com:inmagik/react-bootstrap-widgets.git",
