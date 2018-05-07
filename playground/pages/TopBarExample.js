@@ -16,6 +16,20 @@ export default class TopbarExample extends React.PureComponent {
         offCanvasMenuOpenClass='fab fa-android'
         offCanvasMenuClosedClass='fas fa-heartbeat'
         leftLinks={[
+          // Dropdown
+          {
+            label: 'Account',
+            links: [
+              {
+                label: 'Settings',
+                to: '/TopBar/settings',
+              },
+              {
+                label: <Fragment><i className={'fa fa-space-shuttle'} />{' '}Space</Fragment>,
+                onClick: () => alert('Go To Space!'),
+              },
+            ]
+          },
           // // Simple
           {
             label: 'Hello!',
@@ -52,6 +66,7 @@ export default class TopbarExample extends React.PureComponent {
           },
           // Dropdown
           {
+            right: false,
             label: 'Who?',
             links: [
               {

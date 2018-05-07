@@ -2,9 +2,9 @@ import React from 'react'
 import { NavLink } from 'react-router-dom'
 import DropDown from './DropDown'
 
-const TopBarLink = ({ label, links, to, onClick, exact }) => (
+const TopBarLink = ({ label, right, links, to, onClick, exact }) => (
   links
-    ? <DropDown label={label} items={links} />
+    ? <DropDown label={label} items={links} right={right} />
     : (
       <li className='nav-item' onClick={onClick}>
         {to

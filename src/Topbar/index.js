@@ -87,13 +87,13 @@ class Topbar extends PureComponent {
 
         <ul className="navbar-nav mr-auto">
           {!showOffCanvas && leftLinks.map((linkConf, i) => (
-            <TopBarLink key={i} {...linkConf} />
+            <TopBarLink key={i} right={false} {...linkConf} />
           ))}
         </ul>
 
         <ul className="navbar-nav">
           {!showOffCanvas && rightLinks.map((linkConf, i) => (
-            <TopBarLink key={i} {...linkConf} />
+            <TopBarLink key={i} right={true} {...linkConf} />
           ))}
         </ul>
 
